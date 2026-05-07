@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,6 +24,13 @@ export function Navbar() {
             >
               Terms
             </Link>
+            <a href="https://graycup.org" target="_blank" rel="noopener noreferrer">
+              <Button
+              variant="blue"
+            >
+                A project by Gray Cup
+              </Button>
+            </a>
           </nav>
         </div>
       </header>

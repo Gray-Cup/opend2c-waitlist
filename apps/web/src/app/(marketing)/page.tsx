@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
+import { Button } from "@/components/ui/button";
 
 const PLATFORMS = [
   { id: "amazon", label: "Amazon" },
@@ -107,7 +109,7 @@ export default function Home() {
           custom={0}
           className="inline-block bg-green-50 text-green-700 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-6"
         >
-          Early Access
+          Free & Open Source
         </motion.div>
 
         <motion.h1
@@ -128,18 +130,24 @@ export default function Home() {
           className="text-lg text-neutral-600 max-w-xl mx-auto mb-2"
         >
           OpenD2C is a directory where consumers discover and shop from
-          direct-to-consumer brands — and brands get listed for free.
+          direct-to-consumer brands & brands don't pay to be listed or per sale.
         </motion.p>
 
-        <motion.p
+        {/* Video preview */}
+        <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="show"
           custom={3}
-          className="text-sm text-neutral-400 mb-12"
+          className="mb-10 rounded-2xl overflow-hidden border border-neutral-200 shadow-sm aspect-video bg-neutral-100"
         >
-          Join the waitlist and be among the first brands on the platform.
-        </motion.p>
+          <iframe
+            src="https://www.youtube.com/embed/KpZFHtOrHdw?autoplay=1&mute=1&loop=1&playlist=KpZFHtOrHdw&controls=0&modestbranding=1"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            className="w-full h-full"
+          />
+        </motion.div>
 
         {submitted ? (
           <motion.div
@@ -344,6 +352,49 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Founder message */}
+      <div className="border-t border-neutral-100">
+        <div className="max-w-3xl mx-auto px-4 py-16">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            custom={0}
+            className="flex flex-col sm:flex-row gap-6 items-start"
+          >
+            <div className="shrink-0">
+              <Image
+                src="/arjun.png"
+                alt="Arjun Aditya"
+                width={64}
+                height={64}
+                className="rounded-full object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-neutral-700 text-base leading-relaxed mb-4">
+                "D2C brands deserve a home on the internet that costs nothing. OpenD2C is that home which is free, open, and built for founders who want visibility. Consumers can find and shop directly from their websites."
+              </p>
+              <p className="text-sm font-semibold text-neutral-900">Arjun Aditya</p>
+              <p className="text-sm pb-4 text-neutral-500">Founder, Gray Cup</p>
+              <div className="flex gap-2">
+                <a href="https://twitter.com/arjunaditya_" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:underline">
+                  <Button variant="gray" size="sm">
+                    Follow on Twitter
+                  </Button>
+                </a>
+                <a href="https://graycup.org" target="_blank" rel="dofollow" className="text-sm text-green-600 hover:underline">
+              <Button variant="blue" size="sm">
+                Visit Gray Cup
+              </Button>
+              </a>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>
