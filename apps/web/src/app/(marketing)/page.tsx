@@ -105,15 +105,12 @@ export default function Home() {
         </p>
 
         {/* Video preview */}
-        <div
-          className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md"
-          style={{ padding: "75% 0 0 0", position: "relative" }}
-        >
+        <div className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md" style={{ aspectRatio: "4/3" }}>
           <iframe
             src="https://player.vimeo.com/video/1189966623?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
-            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
+            style={{ width: "100%", height: "100%", border: 0, display: "block" }}
             title="OpenD2C Demo"
           />
         </div>
