@@ -101,7 +101,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <div className="max-w-3xl mx-auto px-4 py-20 text-center">
+      <div className="max-w-3xl mx-auto px-4 pt-20 pb-16 text-center">
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -127,7 +127,7 @@ export default function Home() {
           initial="hidden"
           animate="show"
           custom={2}
-          className="text-lg text-neutral-600 max-w-xl mx-auto mb-2"
+          className="text-lg text-neutral-600 max-w-xl mx-auto mb-8"
         >
           OpenD2C is a directory where consumers discover and shop from
           direct-to-consumer brands & brands don't pay to be listed or per sale.
@@ -139,7 +139,7 @@ export default function Home() {
           initial="hidden"
           animate="show"
           custom={3}
-          className="mb-10 rounded-2xl overflow-hidden border border-neutral-200 shadow-sm aspect-video bg-neutral-900 relative group cursor-pointer"
+          className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md aspect-video bg-neutral-900 relative group cursor-pointer"
           onClick={() => setVideoActive(true)}
         >
           {videoActive ? (
