@@ -3,9 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import { motion } from "framer-motion";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
-import { Button } from "@/components/ui/button";
 
 const PLATFORMS = [
   { id: "amazon", label: "Amazon" },
@@ -32,15 +30,6 @@ const WHY_ITEMS = [
     href: "mailto:softwarize@graycup.org",
   },
 ];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
-  }),
-};
 
 export default function Home() {
   const [form, setForm] = useState({
@@ -102,43 +91,21 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <div className="max-w-3xl mx-auto px-4 pt-20 pb-16 text-center">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={0}
-          className="inline-block bg-green-50 text-green-700 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-6"
-        >
+        <div className="inline-block bg-green-50 text-green-700 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-6">
           Free & Open Source
-        </motion.div>
+        </div>
 
-        <motion.h1
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={1}
-          className="text-4xl sm:text-5xl font-bold text-neutral-900 leading-tight mb-4"
-        >
+        <h1 className="text-4xl sm:text-5xl font-bold text-neutral-900 leading-tight mb-4">
           The marketplace for D2C brands
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={2}
-          className="text-lg text-neutral-600 max-w-xl mx-auto mb-8"
-        >
+        <p className="text-lg text-neutral-600 max-w-xl mx-auto mb-8">
           OpenD2C is a directory where consumers discover and shop from
-          direct-to-consumer brands & brands don't pay to be listed or per sale.
-        </motion.p>
+          direct-to-consumer brands & brands don&apos;t pay to be listed or per sale.
+        </p>
 
         {/* Video preview */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={3}
+        <div
           className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md"
           style={{ padding: "75% 0 0 0", position: "relative" }}
         >
@@ -149,16 +116,11 @@ export default function Home() {
             style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
             title="OpenD2C Demo"
           />
-        </motion.div>
+        </div>
         <Script src="https://player.vimeo.com/api/player.js" />
 
         {submitted ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.35 }}
-            className="border border-green-200 bg-green-50 rounded-2xl p-10 text-center"
-          >
+          <div className="border border-green-200 bg-green-50 rounded-2xl p-10 text-center">
             <div className="text-3xl mb-3">🎉</div>
             <h2 className="text-xl font-semibold text-neutral-900 mb-2">
               You&apos;re on the list!
@@ -166,13 +128,9 @@ export default function Home() {
             <p className="text-neutral-600">
               We&apos;ll reach out as soon as OpenD2C is ready for you.
             </p>
-          </motion.div>
+          </div>
         ) : (
-          <motion.form
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={4}
+          <form
             onSubmit={handleSubmit}
             className="bg-white border border-neutral-200 rounded-2xl p-8 text-left shadow-sm space-y-5"
           >
@@ -283,7 +241,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Turnstile */}
             <div>
               <Turnstile
                 onVerify={turnstile.handleVerify}
@@ -314,32 +271,20 @@ export default function Home() {
               </Link>
               .
             </p>
-          </motion.form>
+          </form>
         )}
       </div>
 
       {/* Why OpenD2C */}
       <div className="border-t border-neutral-100 bg-neutral-50">
         <div className="max-w-3xl mx-auto px-4 py-16">
-          <motion.h2
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            custom={0}
-            className="text-2xl font-semibold text-neutral-900 mb-8 text-center"
-          >
+          <h2 className="text-2xl font-semibold text-neutral-900 mb-8 text-center">
             Why OpenD2C?
-          </motion.h2>
+          </h2>
           <div className="grid sm:grid-cols-3 gap-6">
-            {WHY_ITEMS.map((item, i) => (
-              <motion.div
+            {WHY_ITEMS.map((item) => (
+              <div
                 key={item.title}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                custom={i + 1}
                 className={`rounded-xl border p-5 ${item.href ? "bg-green-50 border-green-200" : "bg-white border-neutral-200"}`}
               >
                 <h3 className="font-semibold text-neutral-900 mb-1">{item.title}</h3>
@@ -352,7 +297,7 @@ export default function Home() {
                     softwarize@graycup.org →
                   </a>
                 )}
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -361,14 +306,7 @@ export default function Home() {
       {/* Founder message */}
       <div className="border-t border-neutral-100">
         <div className="max-w-3xl mx-auto px-4 py-16">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            custom={0}
-            className="flex flex-col sm:flex-row gap-6 items-start"
-          >
+          <div className="flex flex-col sm:flex-row gap-6 items-start">
             <div className="shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -381,24 +319,12 @@ export default function Home() {
             </div>
             <div>
               <p className="text-neutral-700 text-base leading-relaxed mb-4">
-                "D2C brands deserve a home on the internet that costs nothing. OpenD2C is that home which is free, open, and built for founders who want visibility. Consumers can find and shop directly from their websites."
+                &ldquo;Indian D2C brands deserve a home on the internet that isn&apos;t controlled by marketplace algorithms or listing fees. OpenD2C is that home — free, open, and built for founders who want to own their relationship with customers.&rdquo;
               </p>
               <p className="text-sm font-semibold text-neutral-900">Arjun Aditya</p>
-              <p className="text-sm pb-4 text-neutral-500">Founder, Gray Cup</p>
-              <div className="flex gap-2">
-                <a href="https://twitter.com/arjunaditya_" target="_blank" rel="noopener noreferrer" className="text-sm text-green-600 hover:underline">
-                  <Button variant="gray" size="sm">
-                    Follow on Twitter
-                  </Button>
-                </a>
-                <a href="https://graycup.org" target="_blank" rel="dofollow" className="text-sm text-green-600 hover:underline">
-              <Button variant="blue" size="sm">
-                Visit Gray Cup
-              </Button>
-              </a>
-              </div>
+              <p className="text-sm text-neutral-500">Founder, OpenD2C</p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>
