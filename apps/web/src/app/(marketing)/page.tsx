@@ -105,7 +105,7 @@ export default function Home() {
         </p>
 
         {/* Video preview */}
-        <div className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md" style={{ aspectRatio: "4/3" }}>
+        <div className="mb-12 rounded-2xl overflow-hidden" style={{ aspectRatio: "16/9" }}>
           <iframe
             src="https://player.vimeo.com/video/1189966623?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
