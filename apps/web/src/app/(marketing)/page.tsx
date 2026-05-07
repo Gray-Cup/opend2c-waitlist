@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Script from "next/script";
 import { motion } from "framer-motion";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
 import { Button } from "@/components/ui/button";
@@ -138,15 +139,18 @@ export default function Home() {
           initial="hidden"
           animate="show"
           custom={3}
-          className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md aspect-video"
+          className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md"
+          style={{ padding: "75% 0 0 0", position: "relative" }}
         >
           <iframe
-            src="https://www.youtube.com/embed/KpZFHtOrHdw?rel=0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full"
+            src="https://player.vimeo.com/video/1189966623?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
+            title="OpenD2C Demo"
           />
         </motion.div>
+        <Script src="https://player.vimeo.com/api/player.js" />
 
         {submitted ? (
           <motion.div
