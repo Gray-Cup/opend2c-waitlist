@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
+import { Button } from "@/components/ui/button";
 
 const PLATFORMS = [
   { id: "amazon", label: "Amazon" },
@@ -287,7 +288,15 @@ export default function Home() {
                 &ldquo;Indian D2C brands deserve a home on the internet that isn&apos;t controlled by marketplace algorithms or listing fees. OpenD2C is that home — free, open, and built for founders who want to own their relationship with customers.&rdquo;
               </p>
               <p className="text-sm font-semibold text-neutral-900">Arjun Aditya</p>
-              <p className="text-sm text-neutral-500">Founder, OpenD2C</p>
+              <p className="text-sm pb-4 text-neutral-500">Founder, Gray Cup</p>
+              <div className="flex gap-2">
+                <a href="https://twitter.com/arjunaditya_" target="_blank" rel="noopener noreferrer">
+                  <Button variant="gray" size="sm">Follow on Twitter</Button>
+                </a>
+                <a href="https://graycup.org" target="_blank" rel="dofollow">
+                  <Button variant="blue" size="sm">Visit Gray Cup</Button>
+                </a>
+              </div>
             </div>
           </div>
         </div>
