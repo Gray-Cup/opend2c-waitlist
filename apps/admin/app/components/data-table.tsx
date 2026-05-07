@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Table, Button, Badge, Text, Input, Select, toast } from '@medusajs/ui'
-import { format } from 'date-fns'
+import { Table, Button, Badge, Text, Input, Select, DropdownMenu, toast } from '@medusajs/ui'
+import { EllipsisHorizontal } from '@medusajs/icons'
 import { useSubmissions, updateSubmission, deleteSubmission } from '@/lib/hooks/use-submissions'
 
 interface Column {
@@ -56,17 +56,9 @@ export function DataTable({ tableName, columns, title }: DataTableProps) {
     }
   }
 
-  const formatDate = (dateString: string) => {
-    try {
-      return format(new Date(dateString), 'MMM d, yyyy h:mm a')
-    } catch {
-      return dateString
-    }
-  }
-
   return (
     <div>
-      <div className="mb-6 flex flex-col sm:flex-row gap-3 justify-between">
+      <div className="mb-4 flex flex-col sm:flex-row gap-3 justify-between">
         <div className="flex gap-3 items-center">
           <Select value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
             <Select.Trigger>
@@ -103,51 +95,50 @@ export function DataTable({ tableName, columns, title }: DataTableProps) {
           <Table>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Status</Table.HeaderCell>
+                <Table.HeaderCell className="py-2">Status</Table.HeaderCell>
                 {columns.map((col) => (
-                  <Table.HeaderCell key={col.key}>{col.label}</Table.HeaderCell>
+                  <Table.HeaderCell key={col.key} className="py-2">{col.label}</Table.HeaderCell>
                 ))}
-                <Table.HeaderCell>Date</Table.HeaderCell>
-                <Table.HeaderCell>Actions</Table.HeaderCell>
+                <Table.HeaderCell className="py-2 w-10"></Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {filteredData.map((row: Record<string, unknown>) => (
-                <Table.Row key={row.id as string}>
-                  <Table.Cell>
-                    <Badge color={row.resolved ? 'green' : 'orange'}>
+                <Table.Row key={row.id as string} className="h-10">
+                  <Table.Cell className="py-1.5">
+                    <Badge size="xsmall" color={row.resolved ? 'green' : 'orange'}>
                       {row.resolved ? 'Contacted' : 'Pending'}
                     </Badge>
                   </Table.Cell>
                   {columns.map((col) => (
-                    <Table.Cell key={col.key}>
+                    <Table.Cell key={col.key} className="py-1.5 text-sm">
                       {col.render
                         ? col.render(row[col.key], row)
                         : (row[col.key] as string) ?? '-'}
                     </Table.Cell>
                   ))}
-                  <Table.Cell>
-                    <Text className="text-sm text-ui-fg-subtle whitespace-nowrap">
-                      {formatDate(row.created_at as string)}
-                    </Text>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="secondary"
-                        size="small"
-                        onClick={() => toggleResolved(row.id as string, row.resolved as boolean)}
-                      >
-                        {row.resolved ? 'Mark Pending' : 'Mark Contacted'}
-                      </Button>
-                      <Button
-                        variant="danger"
-                        size="small"
-                        onClick={() => handleDelete(row.id as string)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
+                  <Table.Cell className="py-1.5">
+                    <DropdownMenu>
+                      <DropdownMenu.Trigger asChild>
+                        <Button variant="transparent" size="small" className="p-1">
+                          <EllipsisHorizontal />
+                        </Button>
+                      </DropdownMenu.Trigger>
+                      <DropdownMenu.Content>
+                        <DropdownMenu.Item
+                          onClick={() => toggleResolved(row.id as string, row.resolved as boolean)}
+                        >
+                          {row.resolved ? 'Mark as pending' : 'Mark as contacted'}
+                        </DropdownMenu.Item>
+                        <DropdownMenu.Separator />
+                        <DropdownMenu.Item
+                          className="text-ui-fg-error"
+                          onClick={() => handleDelete(row.id as string)}
+                        >
+                          Delete
+                        </DropdownMenu.Item>
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
                   </Table.Cell>
                 </Table.Row>
               ))}
@@ -156,7 +147,7 @@ export function DataTable({ tableName, columns, title }: DataTableProps) {
         </div>
       )}
 
-      <div className="mt-4">
+      <div className="mt-3">
         <Text className="text-sm text-ui-fg-subtle">
           Showing {filteredData.length} of {data.length} items
         </Text>
