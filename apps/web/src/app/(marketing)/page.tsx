@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Script from "next/script";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
 
 const PLATFORMS = [
@@ -107,14 +106,13 @@ export default function Home() {
         {/* Video preview */}
         <div className="mb-12 rounded-2xl overflow-hidden" style={{ aspectRatio: "16/9" }}>
           <iframe
-            src="https://player.vimeo.com/video/1189966623?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+            src="https://player.vimeo.com/video/1189966623?badge=0&player_id=0&app_id=58479"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             style={{ width: "100%", height: "100%", border: 0, display: "block" }}
             title="OpenD2C Demo"
           />
         </div>
-        <Script src="https://player.vimeo.com/api/player.js" />
 
         {submitted ? (
           <div className="border border-green-200 bg-green-50 rounded-2xl p-10 text-center">
@@ -270,34 +268,6 @@ export default function Home() {
             </p>
           </form>
         )}
-      </div>
-
-      {/* Why OpenD2C */}
-      <div className="border-t border-neutral-100 bg-neutral-50">
-        <div className="max-w-3xl mx-auto px-4 py-16">
-          <h2 className="text-2xl font-semibold text-neutral-900 mb-8 text-center">
-            Why OpenD2C?
-          </h2>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {WHY_ITEMS.map((item) => (
-              <div
-                key={item.title}
-                className={`rounded-xl border p-5 ${item.href ? "bg-green-50 border-green-200" : "bg-white border-neutral-200"}`}
-              >
-                <h3 className="font-semibold text-neutral-900 mb-1">{item.title}</h3>
-                <p className="text-sm text-neutral-600">{item.body}</p>
-                {item.href && (
-                  <a
-                    href={item.href}
-                    className="mt-3 inline-block text-xs font-medium text-green-700 hover:underline"
-                  >
-                    softwarize@graycup.org →
-                  </a>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Founder message */}
