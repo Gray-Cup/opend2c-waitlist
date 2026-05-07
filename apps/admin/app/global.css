@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@source "../node_modules/@medusajs/ui";
+@config "../tailwind.config.js";
+
+
+html {
+  min-width: 360px;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+/* Remove Safari input shadow on mobile */
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Ensure buttons have pointer cursor */
+button,
+[role="button"] {
+  cursor: pointer;
+}

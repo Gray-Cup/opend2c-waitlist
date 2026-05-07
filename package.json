@@ -1,0 +1,19 @@
+{
+  "name": "b2b-leads-starter",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start",
+    "lint": "turbo lint",
+    "dev:admin": "turbo dev --filter=@b2b/admin",
+    "dev:web": "turbo dev --filter=@b2b/web",
+    "build:admin": "turbo build --filter=@b2b/admin",
+    "build:web": "turbo build --filter=@b2b/web"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
