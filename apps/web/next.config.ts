@@ -58,4 +58,5 @@ const withMDX = createMDX({
   },
 });
 
+// @ts-expect-error type conflict from next@15/next@16 coexisting in monorepo
 export default withMDX(nextConfig);

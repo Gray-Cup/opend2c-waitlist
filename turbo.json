@@ -4,7 +4,16 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "DATABASE_URL",
+        "TURNSTILE_SECRET_KEY",
+        "DISCORD_WEBHOOK_URL",
+        "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+        "JWT_SECRET",
+        "ADMIN_USERNAME",
+        "ADMIN_PASSWORD"
+      ]
     },
     "dev": {
       "cache": false,

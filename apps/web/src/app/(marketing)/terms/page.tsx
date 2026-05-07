@@ -41,7 +41,7 @@ export default function Terms() {
             3. Advertising
           </h2>
           <p>
-            To cover server and operational costs, we may display advertising on
+            To cover server and operational costs, we may display advertisements on
             the OpenD2C website in the future. Advertising will not affect the
             neutral listing of brands or bias discovery results.
           </p>
