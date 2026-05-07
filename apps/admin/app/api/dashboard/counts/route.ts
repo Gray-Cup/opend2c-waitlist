@@ -1,25 +1,22 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { db } from '@/lib/db'
+import { waitlist } from '@/db/schema'
+import { count, eq } from 'drizzle-orm'
 
 const tables = [
-  { table: 'waitlist', label: 'Waitlist', href: '/waitlist' },
+  { table: 'waitlist' as const, label: 'Waitlist', href: '/waitlist' },
 ]
 
 export async function GET() {
   try {
     const counts = await Promise.all(
       tables.map(async ({ table, label, href }) => {
-        const { count, error } = await supabase
-          .from(table)
-          .select('*', { count: 'exact', head: true })
-          .eq('resolved', false)
+        const result = await db
+          .select({ count: count() })
+          .from(waitlist)
+          .where(eq(waitlist.resolved, false))
 
-        if (error) {
-          console.error(`Error fetching ${table}:`, error)
-          return { table, label, href, count: 0 }
-        }
-
-        return { table, label, href, count: count ?? 0 }
+        return { table, label, href, count: Number(result[0]?.count ?? 0) }
       })
     )
 

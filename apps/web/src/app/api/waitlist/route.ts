@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { db } from "@/db";
+import { waitlist } from "@/db/schema";
 
 async function verifyTurnstile(token: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
@@ -98,30 +99,17 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey =
-    process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    return NextResponse.json(
-      { error: "Server configuration error." },
-      { status: 500 }
-    );
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
-
-  const { error } = await supabase.from("waitlist").insert({
-    person_name,
-    company_name,
-    gst_number: gst_number || null,
-    website: website || null,
-    email,
-    platforms: platforms ?? [],
-  });
-
-  if (error) {
-    console.error("Supabase error:", error);
+  try {
+    await db.insert(waitlist).values({
+      personName: person_name,
+      companyName: company_name,
+      gstNumber: gst_number || null,
+      website: website || null,
+      email,
+      platforms: platforms ?? [],
+    });
+  } catch (err) {
+    console.error("DB error:", err);
     return NextResponse.json(
       { error: "Failed to save. Please try again." },
       { status: 500 }

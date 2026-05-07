@@ -1,26 +1,15 @@
 'use client'
 
 import { useEffect } from 'react'
-import { supabaseClient } from '@/lib/supabase-client'
 import { revalidateAllCaches } from '@/lib/hooks/use-submissions'
 
 export function RealtimeProvider() {
   useEffect(() => {
-    const channel = supabaseClient
-      .channel('waitlist-changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'waitlist' },
-        (payload) => {
-          console.log('Realtime update on waitlist:', payload.eventType)
-          revalidateAllCaches('waitlist')
-        }
-      )
-      .subscribe()
+    const interval = setInterval(() => {
+      revalidateAllCaches()
+    }, 30_000)
 
-    return () => {
-      supabaseClient.removeChannel(channel)
-    }
+    return () => clearInterval(interval)
   }, [])
 
   return null

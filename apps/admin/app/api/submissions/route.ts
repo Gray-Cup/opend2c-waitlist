@@ -1,35 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSupabase } from '@/lib/supabase'
+import { db } from '@/lib/db'
+import { waitlist } from '@/db/schema'
+import { eq, desc } from 'drizzle-orm'
 
-const validTables = ['waitlist']
+const tableMap = { waitlist } as const
+type ValidTable = keyof typeof tableMap
+const validTables: ValidTable[] = ['waitlist']
+
+function isValidTable(t: string | null): t is ValidTable {
+  return validTables.includes(t as ValidTable)
+}
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const table = searchParams.get('table')
   const resolved = searchParams.get('resolved')
 
-  if (!table || !validTables.includes(table)) {
+  if (!isValidTable(table)) {
     return NextResponse.json({ error: 'Invalid table' }, { status: 400 })
   }
 
   try {
-    const supabase = getSupabase()
-    let query = supabase
-      .from(table)
-      .select('*')
-      .order('created_at', { ascending: false })
+    const tbl = tableMap[table]
+    let data
 
     if (resolved === 'true') {
-      query = query.eq('resolved', true)
+      data = await db.select().from(tbl).where(eq(tbl.resolved, true)).orderBy(desc(tbl.createdAt))
     } else if (resolved === 'false') {
-      query = query.eq('resolved', false)
-    }
-
-    const { data, error } = await query
-
-    if (error) {
-      console.error(`Error fetching ${table}:`, error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      data = await db.select().from(tbl).where(eq(tbl.resolved, false)).orderBy(desc(tbl.createdAt))
+    } else {
+      data = await db.select().from(tbl).orderBy(desc(tbl.createdAt))
     }
 
     return NextResponse.json({ data }, {
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('Error:', error)
+    console.error('Error fetching submissions:', error)
     return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 })
   }
 }
@@ -47,33 +47,22 @@ export async function PATCH(request: NextRequest) {
   const body = await request.json()
   const { table, id, resolved } = body
 
-  if (!table || !validTables.includes(table)) {
+  if (!isValidTable(table)) {
     return NextResponse.json({ error: 'Invalid table' }, { status: 400 })
   }
-
   if (!id) {
     return NextResponse.json({ error: 'Missing id' }, { status: 400 })
   }
-
   if (typeof resolved !== 'boolean') {
     return NextResponse.json({ error: 'Invalid resolved value' }, { status: 400 })
   }
 
   try {
-    const supabase = getSupabase()
-    const { error } = await supabase
-      .from(table)
-      .update({ resolved })
-      .eq('id', id)
-
-    if (error) {
-      console.error(`Error updating ${table}:`, error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-
+    const tbl = tableMap[table]
+    await db.update(tbl).set({ resolved }).where(eq(tbl.id, id))
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Error:', error)
+    console.error('Error updating submission:', error)
     return NextResponse.json({ error: 'Failed to update' }, { status: 500 })
   }
 }
@@ -83,29 +72,19 @@ export async function DELETE(request: NextRequest) {
   const table = searchParams.get('table')
   const id = searchParams.get('id')
 
-  if (!table || !validTables.includes(table)) {
+  if (!isValidTable(table)) {
     return NextResponse.json({ error: 'Invalid table' }, { status: 400 })
   }
-
   if (!id) {
     return NextResponse.json({ error: 'Missing id' }, { status: 400 })
   }
 
   try {
-    const supabase = getSupabase()
-    const { error } = await supabase
-      .from(table)
-      .delete()
-      .eq('id', id)
-
-    if (error) {
-      console.error(`Error deleting from ${table}:`, error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-
+    const tbl = tableMap[table]
+    await db.delete(tbl).where(eq(tbl.id, id))
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Error:', error)
+    console.error('Error deleting submission:', error)
     return NextResponse.json({ error: 'Failed to delete' }, { status: 500 })
   }
 }
