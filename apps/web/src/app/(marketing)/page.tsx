@@ -103,16 +103,14 @@ export default function Home() {
           direct-to-consumer brands & brands don&apos;t pay to be listed or per sale.
         </p>
 
-        {/* Video preview */}
-        <div className="mb-12 rounded-2xl overflow-hidden" style={{ aspectRatio: "16/9" }}>
-          <iframe
-            src="https://player.vimeo.com/video/1189966623?badge=0&player_id=0&app_id=58479"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            style={{ width: "100%", height: "100%", border: 0, display: "block" }}
-            title="OpenD2C Demo"
-          />
-        </div>
+        <a
+          href="https://youtu.be/KpZFHtOrHdw"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 mb-10 px-5 py-2.5 rounded-full border text-sm font-medium text-white bg-red-500 hover:bg-red-600 active:bg-red-700 transition-colors"
+        >
+          Watch Demo
+        </a>
 
         {submitted ? (
           <div className="border border-green-200 bg-green-50 rounded-2xl p-10 text-center">
