@@ -53,7 +53,6 @@ export default function Home() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
-  const [videoActive, setVideoActive] = useState(false);
 
   const turnstile = useTurnstile();
 
@@ -133,39 +132,20 @@ export default function Home() {
           direct-to-consumer brands & brands don't pay to be listed or per sale.
         </motion.p>
 
-        {/* Video preview — iframe loads only on click to avoid blocking page */}
+        {/* Video preview */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="show"
           custom={3}
-          className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md aspect-video bg-neutral-900 relative group cursor-pointer"
-          onClick={() => setVideoActive(true)}
+          className="mb-12 rounded-2xl overflow-hidden border border-neutral-200 shadow-md aspect-video"
         >
-          {videoActive ? (
-            <iframe
-              src="https://www.youtube.com/embed/KpZFHtOrHdw?autoplay=1&rel=0&modestbranding=1"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              className="w-full h-full"
-            />
-          ) : (
-            <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://i.ytimg.com/vi/KpZFHtOrHdw/maxresdefault.jpg"
-                alt="Product preview"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
-                <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                  <svg className="w-6 h-6 text-neutral-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-              </div>
-            </>
-          )}
+          <iframe
+            src="https://www.youtube.com/embed/KpZFHtOrHdw?rel=0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
+          />
         </motion.div>
 
         {submitted ? (
