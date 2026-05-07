@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Turnstile, useTurnstile } from "@/components/ui/turnstile";
 import { Button } from "@/components/ui/button";
@@ -54,6 +53,7 @@ export default function Home() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [videoActive, setVideoActive] = useState(false);
 
   const turnstile = useTurnstile();
 
@@ -133,20 +133,39 @@ export default function Home() {
           direct-to-consumer brands & brands don't pay to be listed or per sale.
         </motion.p>
 
-        {/* Video preview */}
+        {/* Video preview — iframe loads only on click to avoid blocking page */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="show"
           custom={3}
-          className="mb-10 rounded-2xl overflow-hidden border border-neutral-200 shadow-sm aspect-video bg-neutral-100"
+          className="mb-10 rounded-2xl overflow-hidden border border-neutral-200 shadow-sm aspect-video bg-neutral-900 relative group cursor-pointer"
+          onClick={() => setVideoActive(true)}
         >
-          <iframe
-            src="https://www.youtube.com/embed/KpZFHtOrHdw?autoplay=1&mute=1&loop=1&playlist=KpZFHtOrHdw&controls=0&modestbranding=1"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            className="w-full h-full"
-          />
+          {videoActive ? (
+            <iframe
+              src="https://www.youtube.com/embed/KpZFHtOrHdw?autoplay=1&rel=0&modestbranding=1"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          ) : (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://i.ytimg.com/vi/KpZFHtOrHdw/maxresdefault.jpg"
+                alt="Product preview"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                  <svg className="w-6 h-6 text-neutral-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            </>
+          )}
         </motion.div>
 
         {submitted ? (
@@ -367,12 +386,13 @@ export default function Home() {
             className="flex flex-col sm:flex-row gap-6 items-start"
           >
             <div className="shrink-0">
-              <Image
-                src="/arjun.png"
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/arjun.jpg"
                 alt="Arjun Aditya"
                 width={64}
                 height={64}
-                className="rounded-full object-cover"
+                className="rounded-full object-cover w-16 h-16"
               />
             </div>
             <div>
