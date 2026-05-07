@@ -17,14 +17,17 @@ const WHY_ITEMS = [
   {
     title: "Free listings",
     body: "We won't charge per listing — your brand page is free.",
+    href: null,
   },
   {
     title: "Get discovered",
-    body: "Customers, retailers and distributors can find you on one platform.",
+    body: "Consumers browse OpenD2C to find products directly from D2C brands.",
+    href: null,
   },
   {
-    title: "Built for India",
-    body: "Supports Amazon, Flipkart, Meesho, quick commerce and more.",
+    title: "Need a custom store?",
+    body: "Get it built by Gray Cup. Reach out at softwarize@graycup.org or arjun@graycup.in.",
+    href: "mailto:softwarize@graycup.org",
   },
 ];
 
@@ -124,8 +127,8 @@ export default function Home() {
           custom={2}
           className="text-lg text-neutral-600 max-w-xl mx-auto mb-2"
         >
-          OpenD2C is a directory where direct-to-consumer brands get discovered
-          by customers, retailers, and partners — without paying per listing.
+          OpenD2C is a directory where consumers discover and shop from
+          direct-to-consumer brands — and brands get listed for free.
         </motion.p>
 
         <motion.p
@@ -170,7 +173,7 @@ export default function Home() {
                 <input
                   type="text"
                   required
-                  placeholder="Arjun Sharma"
+                  placeholder="Rajesh Kumar"
                   value={form.person_name}
                   onChange={(e) =>
                     setForm((p) => ({ ...p, person_name: e.target.value }))
@@ -186,7 +189,7 @@ export default function Home() {
                 <input
                   type="text"
                   required
-                  placeholder="Nourish Co."
+                  placeholder="Derma Co"
                   value={form.company_name}
                   onChange={(e) =>
                     setForm((p) => ({ ...p, company_name: e.target.value }))
@@ -326,10 +329,18 @@ export default function Home() {
                 whileInView="show"
                 viewport={{ once: true }}
                 custom={i + 1}
-                className="bg-white rounded-xl border border-neutral-200 p-5"
+                className={`rounded-xl border p-5 ${item.href ? "bg-green-50 border-green-200" : "bg-white border-neutral-200"}`}
               >
                 <h3 className="font-semibold text-neutral-900 mb-1">{item.title}</h3>
                 <p className="text-sm text-neutral-600">{item.body}</p>
+                {item.href && (
+                  <a
+                    href={item.href}
+                    className="mt-3 inline-block text-xs font-medium text-green-700 hover:underline"
+                  >
+                    softwarize@graycup.org →
+                  </a>
+                )}
               </motion.div>
             ))}
           </div>
