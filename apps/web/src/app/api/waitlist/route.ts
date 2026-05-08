@@ -101,9 +101,9 @@ export async function POST(req: NextRequest) {
 
   try {
     await db.insert(waitlist).values({
-      personName: person_name,
-      companyName: company_name,
-      gstNumber: gst_number || null,
+      person_name,
+      company_name,
+      gst_number: gst_number || null,
       website: website || null,
       email,
       platforms: platforms ?? [],

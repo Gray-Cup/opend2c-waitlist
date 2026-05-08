@@ -25,11 +25,11 @@ export async function GET(request: NextRequest) {
     let data
 
     if (resolved === 'true') {
-      data = await db.select().from(tbl).where(eq(tbl.resolved, true)).orderBy(desc(tbl.createdAt))
+      data = await db.select().from(tbl).where(eq(tbl.resolved, true)).orderBy(desc(tbl.created_at))
     } else if (resolved === 'false') {
-      data = await db.select().from(tbl).where(eq(tbl.resolved, false)).orderBy(desc(tbl.createdAt))
+      data = await db.select().from(tbl).where(eq(tbl.resolved, false)).orderBy(desc(tbl.created_at))
     } else {
-      data = await db.select().from(tbl).orderBy(desc(tbl.createdAt))
+      data = await db.select().from(tbl).orderBy(desc(tbl.created_at))
     }
 
     return NextResponse.json({ data }, {
